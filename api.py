@@ -43,9 +43,10 @@ def api_update():
     with sqlite3.connect(db_path) as conn:
         id = request.args['id']
         price = request.args['price']
+        product_name = request.args['product_name']
         cur = conn.cursor()
         query = 'UPDATE products SE'
-        cur.execute('UPDATE products SET price = ? WHERE id = ?',(price, id))
+        cur.execute('UPDATE products SET price = ?, product_name = ? WHERE id = ?',(price, product_name, id))
         conn.commit()
         return jsonify('Updated'),200
 
