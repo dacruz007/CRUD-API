@@ -11,7 +11,16 @@ def api_get_all():
         cur = conn.cursor()
         query = 'SELECT * FROM products'
         products = cur.execute(query).fetchall()
-        return jsonify(products)
+        return jsonify(products), 200
+
+@app.route('/product/<int:id>', methods=['GET'])
+def api_get_id(id):
+    with sqlite3.connect(db_path) as conn:
+        cur = conn.cursor()
+        id = request.args['id']
+        query = 'SELECT * FROM products WHERE id = ?', id
+        product = cur.execute(query)
+        return jsonify(product), 200
 	
 @app.route('/product', methods=['POST'])
 def api_post():
